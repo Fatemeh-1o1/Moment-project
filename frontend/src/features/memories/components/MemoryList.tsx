@@ -1,0 +1,2 @@
+import { useMemories } from '../hooks/useMemories';import { MemoryCard } from './MemoryCard';
+export function MemoryList(){const {data=[],isLoading}=useMemories();if(isLoading)return <p className="text-white">نوشته‌ها دارن پیدا می‌شن…</p>;if(!data.length)return <div className="py-12 text-center text-white"><div className="text-3xl">📌</div>هنوز چیزی سنجاق نکردی. همین امروز شروع کن.</div>;return <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">{data.slice(0,6).map((m,i)=><MemoryCard key={m.id} memory={m} index={i}/>)}</div>}

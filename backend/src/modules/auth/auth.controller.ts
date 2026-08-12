@@ -1,0 +1,5 @@
+import {Router} from 'express';import {z} from 'zod';import {authRequired,sessionCookie,type SessionRequest} from '../../shared/http.js';import {authRepository} from './auth.repository.js';import {authService} from './auth.service.js';
+export const authRouter=Router();const input=z.object({name:z.string().trim().min(2).optional(),email:z.string().email(),password:z.string().min(8)});
+authRouter.post('/register',async(req,res,next)=>{try{const x=input.parse(req.body);const result=await authService.register(x.name??'دوست لحظه',x.email.toLowerCase(),x.password);res.cookie('moment_session',result.token,sessionCookie).status(201).json({user:result.user});}catch(e){next(e)}});
+authRouter.post('/login',async(req,res,next)=>{try{const x=input.omit({name:true}).parse(req.body);const result=await authService.login(x.email.toLowerCase(),x.password);res.cookie('moment_session',result.token,sessionCookie).json({user:result.user});}catch(e){next(e)}});
+authRouter.post('/logout',(_,res)=>res.clearCookie('moment_session').status(204).end());authRouter.get('/me',authRequired,async(req,res)=>res.json({user:await authRepository.byId((req as unknown as SessionRequest).userId)}));

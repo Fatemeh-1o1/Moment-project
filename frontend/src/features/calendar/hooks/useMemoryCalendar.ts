@@ -1,0 +1,2 @@
+import {useMemo,useState} from 'react';import {useMemories} from '../../memories/hooks/useMemories';import {calendarCells,currentPersianMonth} from '../utils/calendarUtils';
+export function useMemoryCalendar(){const initial=currentPersianMonth();const [cursor,setCursor]=useState(initial);const {data=[]}=useMemories();const move=(delta:number)=>setCursor(x=>{const raw=x.month+delta;return raw<1?{year:x.year-1,month:12}:raw>12?{year:x.year+1,month:1}:{...x,month:raw}});return{...cursor,cells:useMemo(()=>calendarCells(cursor.year,cursor.month,data),[cursor,data]),move}}
