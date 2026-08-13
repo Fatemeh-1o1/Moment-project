@@ -1,30 +1,41 @@
-# لحظه (Moment)
+اپلیکیشن ثبت خاطرات روزانه با تقویم شمسی، کپسول زمانی و حس‌وحال روزانه.
 
-یک دیوار شخصی برای سنجاق‌کردن خاطره‌ها و نامه‌هایی به خود آینده.
+## ✨ امکانات
 
-## اجرا
+- 📝 ثبت خاطرات روزانه با متن، عکس، ویدیو و صدا
+- 📅 تقویم شمسی با نمایش خاطرات هر روز
+- 💌 کپسول زمانی (نامه به آینده)
+- 🎨 حس‌وحال روزانه با ۴ حالت (خوب، آروم، دلتنگ، خسته)
+- ⭐ علامت‌گذاری روزهای خاص
+- 🔒 ورود و ثبت‌نام کاربران
 
-1. فایل `.env.example` را با نام `.env` کپی کنید.
-2. پایگاه داده را اجرا کنید: `docker compose up -d`
-3. وابستگی‌ها را نصب کنید: `npm install`
-4. ساختار پایگاه داده را بسازید: `npm run db:migrate`
-5. برنامه را اجرا کنید: `npm run dev`
+## 🛠️ تکنولوژی‌ها
 
-وب‌اپ در `http://localhost:5173` و API در `http://localhost:4000` اجرا می‌شود.
+- **Frontend:** React, TypeScript, Tailwind CSS, React Query
+- **Backend:** Node.js, Express, PostgreSQL
+- **Auth:** JWT
 
-## معماری
+---
 
-- `frontend`: React، TypeScript، Tailwind و TanStack Query
-- `backend`: Express، TypeScript و PostgreSQL
-- منطق هر قابلیت در پوشه خودش قرار دارد.
-- متن کپسول قفل‌شده هرگز در پاسخ API ارسال نمی‌شود.
+## 🚀 راه‌اندازی سریع
 
-## امکانات نسخه اول
+### پیش‌نیازها
 
-- ورود و ثبت‌نام امن با نشست HTTP-only
-- ساخت و مرور یادداشت روزانه و حال‌و‌هوا
-- تقویم شمسی تعاملی خاطره‌ها
-- ساخت، نمایش و حذف کپسول زمانی
-- پنهان‌سازی متن کپسول قفل‌شده در خود API
+1. **Node.js 18+** رو از [nodejs.org](https://nodejs.org) نصب کن
+2. **PostgreSQL** رو نصب کن:
+   - مک: `brew install postgresql@15 && brew services start postgresql@15`
+   - ویندوز: از [postgresql.org](https://www.postgresql.org/download/windows/)
+   - لینوکس: `sudo apt install postgresql`
 
-رسانه در رابط کاربری آماده شده و اتصال ذخیره‌سازی فایل، مطابق نقشه راه، فاز بعدی است.
+### همه دستورات پشت سر هم
+
+```bash
+git clone https://github.com/Fatemeh-1o1/Moment-project.git
+cd Moment-project
+npm install
+psql -U postgres -c "CREATE ROLE moment WITH LOGIN PASSWORD 'moment';"
+psql -U postgres -c "CREATE DATABASE moment OWNER moment;"
+cp backend/.env.example backend/.env
+npm run db:migrate -w backend
+npm run dev
+```
