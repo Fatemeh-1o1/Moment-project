@@ -3,6 +3,7 @@ import { Pin } from '../../../components/ui/Pin';
 import { PersianDateInput, type PersianDateValue } from '../../../components/ui/PersianDateInput';
 import { comparePersianDate, persianToday, persianToIso } from '../../calendar/utils/calendarUtils';
 import { useCreateCapsule } from '../hooks/useCapsules';
+import letterBg from '../../../img/cap.png';
 
 export function CapsuleComposer() {
   const [content, setContent] = useState('');
@@ -23,27 +24,39 @@ export function CapsuleComposer() {
   }
 
   return (
-    <form onSubmit={submit} className="paper mb-8 -rotate-[.35deg] bg-paper-pink p-5 pt-7 sm:p-7">
-      <Pin className="-top-2 right-9" />
-      <textarea
-        aria-label="متن نامه به آینده"
-        value={content}
-        onChange={e => setContent(e.target.value)}
-        className="relative z-[1] min-h-28 w-full resize-y rounded-lg border-0 bg-white/50 p-4 text-sm leading-8 outline-none focus:bg-white/70"
-        placeholder="سلام به خودم در آینده…"
-      />
-      <div className="relative z-[1] mt-4 flex flex-wrap items-end gap-3">
-        <label className="min-w-48 flex-1 text-xs font-bold text-soft-ink">
-          تاریخ باز شدن
-          <PersianDateInput value={date} onChange={setDate} minYear={today.year} maxYear={today.year + 10} />
-        </label>
-        <button
-          disabled={create.isPending || !content.trim() || !dateValid}
-          className="rounded-full bg-ink px-6 py-2.5 text-sm font-bold text-white disabled:opacity-50"
-        >
-          مهر و موم کن
-        </button>
-      </div>
+    <form
+  onSubmit={submit}
+  className="relative mb-8 -rotate-[.35deg] p-6 pt-8"
+  style={{
+    backgroundImage: `url(${letterBg})`,
+    backgroundSize: 'contain',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    width: '100%',
+    maxWidth: '800px',
+    margin: '0 auto',
+    minHeight: '700px',
+  }}
+>
+<textarea
+  aria-label="متن نامه به آینده"
+  value={content}
+  onChange={e => setContent(e.target.value)}
+  className="relative z-[1] mx-auto mt-20 block min-h-28 w-[75%] resize-y bg-transparent p-4 text-sm leading-8 outline-none"
+  placeholder="سلام به خودم در آینده…"
+/>
+<div className="relative z-[1] mt-4 flex flex-col items-center gap-3">
+  <label className="text-xs font-bold text-soft-ink">
+    تاریخ باز شدن
+    <PersianDateInput value={date} onChange={setDate} minYear={today.year} maxYear={today.year + 10} />
+  </label>
+  <button
+    disabled={create.isPending || !content.trim() || !dateValid}
+    className="rounded-full bg-ink px-6 py-2.5 text-sm font-bold text-white disabled:opacity-50"
+  >
+    مهر و موم کن
+  </button>
+</div>
       {!dateValid && <p className="relative z-[1] mt-2 text-xs font-bold text-pin-red">تاریخ باید امروز یا بعد از آن باشد.</p>}
       {create.error && <p className="relative z-[1] mt-3 text-xs font-bold text-pin-red">{create.error.message}</p>}
     </form>

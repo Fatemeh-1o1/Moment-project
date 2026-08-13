@@ -1,18 +1,18 @@
 export const faNumber = (value: string | number) => String(value).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[Number(d)]!);
 
-export const isoToday = () => { 
-  const d = new Date(); 
-  const tz = d.getTimezoneOffset() * 60_000; 
-  return new Date(d.getTime()-tz).toISOString().slice(0,10); 
+export const isoToday = () => {
+  const d = new Date();
+  const tz = d.getTimezoneOffset() * 60_000;
+  return new Date(d.getTime() - tz).toISOString().slice(0, 10);
 };
 
 // نام ماه‌های شمسی
 const persianMonths = [
   'فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور',
-  'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'
+  'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند',
 ];
 
-// تبدیل میلادی به شمسی (تقریبی - برای نمایش کافیه)
+// تبدیل میلادی به شمسی
 function toJalali(date: Date): { year: number; month: number; day: number } {
   const g_days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   const j_days_in_month = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
@@ -22,7 +22,7 @@ function toJalali(date: Date): { year: number; month: number; day: number } {
   let gd = date.getDate() - 1;
 
   let g_day_no = 365 * gy + Math.floor((gy + 3) / 4) - Math.floor((gy + 99) / 100) + Math.floor((gy + 399) / 400);
-  
+
   for (let i = 0; i < gm; ++i) g_day_no += g_days_in_month[i]!;
   if (gm > 1 && ((gy % 4 === 0 && gy % 100 !== 0) || (gy % 400 === 0))) g_day_no++;
   g_day_no += gd;
@@ -71,4 +71,8 @@ export function formatPersianDate(
   }
 }
 
-export const daysUntil = (iso: string) => Math.max(0, Math.ceil((new Date(`${iso}T23:59:59`).getTime()-Date.now())/86_400_000));
+export const daysUntil = (iso: string) => {
+  const date = new Date(iso);
+  if (isNaN(date.getTime())) return 0;
+  return Math.max(0, Math.ceil((date.getTime() - Date.now()) / 86_400_000));
+};

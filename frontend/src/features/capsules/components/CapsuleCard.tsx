@@ -1,1 +1,46 @@
-import {Pin} from '../../../components/ui/Pin';import {formatPersianDate} from '../../../lib/date';import {useDeleteCapsule} from '../hooks/useCapsules';import type {Capsule} from '../types';import {CapsuleStatus} from './CapsuleStatus';export function CapsuleCard({capsule,index}:{capsule:Capsule;index:number}){const remove=useDeleteCapsule();return <article className={`paper ${index%2?'rotate-1':'-rotate-1'} ${capsule.isLocked?'bg-[#ded7c8]':'bg-paper-yellow'} p-5 pt-7`}><Pin color={capsule.isLocked?'bg-pin-blue':'bg-pin-red'} className="-top-2 left-1/2 -translate-x-1/2"/><div className="relative z-[1]"><CapsuleStatus capsule={capsule}/><div className="mt-4 flex items-center justify-between border-t border-dashed border-black/20 pt-3 text-[11px] font-bold text-soft-ink"><span>باز می‌شه در {formatPersianDate(capsule.unlockAt)}</span><button onClick={()=>confirm('این کپسول پاک شود؟')&&remove.mutate(capsule.id)} className="rounded-full px-2 py-1 hover:bg-black/10">حذف</button></div></div></article>}
+import { Pin } from '../../../components/ui/Pin';
+import { useDeleteCapsule } from '../hooks/useCapsules';
+import type { Capsule } from '../types';
+import { CapsuleStatus } from './CapsuleStatus';
+import letterBg from '../../../img/tie.png';
+
+export function CapsuleCard({ capsule, index }: { capsule: Capsule; index: number }) {
+  const remove = useDeleteCapsule();
+
+  const date = new Date(capsule.unlockAt);
+  const valid = !isNaN(date.getTime());
+
+  return (
+    <div className={`${index % 2 ? 'rotate-1' : '-rotate-1'}`}>
+      <article
+        className="relative"
+        style={{
+          backgroundImage: `url(${letterBg})`,
+          backgroundSize: '100% 100%',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          minHeight: '200px',
+        }}
+      >
+      </article>
+
+      <div className="mt-2 flex flex-col gap-1">
+        <CapsuleStatus capsule={capsule} />
+
+        <div className="flex items-center justify-between border-t border-dashed border-black/20 pt-2 text-[11px] font-bold text-soft-ink">
+          <span>
+            {valid
+              ? `باز می‌شه در ${new Intl.DateTimeFormat('fa-IR', { day: 'numeric', month: 'long', year: 'numeric' }).format(date)}`
+              : 'تاریخ نامشخص'}
+          </span>
+          <button
+            onClick={() => confirm('این کپسول پاک شود؟') && remove.mutate(capsule.id)}
+            className="rounded-full px-2 py-1 hover:bg-black/10"
+          >
+            حذف
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

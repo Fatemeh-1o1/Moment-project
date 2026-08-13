@@ -1,10 +1,18 @@
 import { faNumber } from '../../lib/date';
-import { daysInPersianMonth, persianMonthNames } from '../../features/calendar/utils/calendarUtils';
+import { persianMonthNames } from '../../features/calendar/utils/calendarUtils';
 
 export interface PersianDateValue {
   year: number;
   month: number;
   day: number;
+}
+
+function daysInMonth(year: number, month: number): number {
+  if (month <= 6) return 31;
+  if (month <= 11) return 30;
+  // اسفند
+  const isLeap = (year - 1398) % 4 === 0; // تقریب کبیسه شمسی
+  return isLeap ? 30 : 29;
 }
 
 export function PersianDateInput({
@@ -19,11 +27,11 @@ export function PersianDateInput({
   maxYear?: number;
 }) {
   const years = Array.from({ length: (maxYear ?? value.year + 5) - (minYear ?? value.year) + 1 }, (_, i) => (minYear ?? value.year) + i);
-  const dayCount = daysInPersianMonth(value.year, value.month);
+  const dayCount = daysInMonth(value.year, value.month);
   const days = Array.from({ length: dayCount }, (_, i) => i + 1);
 
   function update(next: PersianDateValue) {
-    const maxDay = daysInPersianMonth(next.year, next.month);
+    const maxDay = daysInMonth(next.year, next.month);
     onChange({ ...next, day: Math.min(next.day, maxDay) });
   }
 

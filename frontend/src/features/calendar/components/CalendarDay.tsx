@@ -5,14 +5,19 @@ import { CalendarPinnedNote } from './CalendarPinnedNote';
 export function CalendarDay({ cell, onSelect }: { cell: CalendarCell; onSelect: () => void }) {
   if (!cell.day) return <div />;
 
+  const hasMemories = cell.memories.length > 0;
+
   return (
     <button
       onClick={onSelect}
-      disabled={!cell.memory}
-      aria-label={cell.memory ? `خاطره روز ${cell.day}` : `روز ${cell.day}`}
-      className={`relative aspect-square min-w-0 rounded-lg text-xs ${cell.isToday ? 'bg-white/30' : 'bg-white/10'} ${cell.memory ? 'cursor-pointer' : 'cursor-default'}`}
+      aria-label={hasMemories ? `خاطرات روز ${cell.day}` : `افزودن خاطره برای روز ${cell.day}`}
+      className={`relative aspect-square min-w-0 rounded-lg text-xs ${cell.isToday ? 'bg-white/30' : 'bg-white/10'} cursor-pointer hover:bg-white/20`}
     >
-      {cell.memory ? <CalendarPinnedNote memory={cell.memory} /> : <span className="text-white/75">{faNumber(cell.day)}</span>}
+      {hasMemories ? (
+        <CalendarPinnedNote memory={cell.memories[0]!} day={cell.day} count={cell.memories.length} />
+      ) : (
+        <span className="text-white/75">{faNumber(cell.day)}</span>
+      )}
     </button>
   );
 }

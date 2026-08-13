@@ -16,7 +16,14 @@ export const upload = multer({
   storage,
   limits: { fileSize: 15 * 1024 * 1024 },
   fileFilter: (_req, file, cb) => {
-    if (file.mimetype.startsWith('image/') || file.mimetype.startsWith('video/')) cb(null, true);
-    else cb(new Error('فقط عکس یا ویدیو مجاز است'));
+    if (
+      file.mimetype.startsWith('image/') ||
+      file.mimetype.startsWith('video/') ||
+      file.mimetype.startsWith('audio/')
+    ) {
+      cb(null, true);
+    } else {
+      cb(new Error('فقط عکس، ویدیو یا صدا مجاز است'));
+    }
   },
 });

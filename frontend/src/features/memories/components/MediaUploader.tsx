@@ -5,13 +5,19 @@ export function MediaUploader({ file, onChange }: { file: File | null; onChange:
 
   return (
     <div className="mt-3 flex items-center gap-3">
-      <input ref={input} hidden type="file" accept="image/*,video/*" onChange={e => onChange(e.target.files?.[0] ?? null)} />
+      <input
+        ref={input}
+        hidden
+        type="file"
+        accept="image/*,video/*,audio/*"
+        onChange={(e) => onChange(e.target.files?.[0] ?? null)}
+      />
       <button
         type="button"
         onClick={() => input.current?.click()}
         className="rounded-xl border-2 border-dashed border-soft-ink bg-white/35 px-3 py-2 text-xs font-bold text-soft-ink"
       >
-        عکس یا ویدیو
+        عکس یا ویدیو یا صدا
       </button>
       {file && (
         <span className="rounded-lg bg-white px-3 py-1 text-xs shadow">

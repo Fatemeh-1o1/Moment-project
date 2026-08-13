@@ -5,10 +5,10 @@ import tiredImg from '../../img/521cfde1c7bf5f7be7f4c33c39981714.jpg';
 import type { MoodKey } from './types';
 
 export const MOODS = [
-  { key: 'happy', label: 'خوب', image: happyImg, pin: 'bg-pin-gold' },
-  { key: 'calm', label: 'آروم', image: calmImg, pin: 'bg-pin-blue' },
-  { key: 'nostalgic', label: 'دلتنگ', image: nostalgicImg, pin: 'bg-pin-red' },
-  { key: 'tired', label: 'خسته', image: tiredImg, pin: 'bg-wood' },
+  { key: 'happy', label: 'پوکر', image: happyImg, pin: 'bg-pin-gold' },
+  { key: 'calm', label: 'عصبانی', image: calmImg, pin: 'bg-pin-blue' },
+  { key: 'nostalgic', label: 'چندش', image: nostalgicImg, pin: 'bg-pin-red' },
+  { key: 'tired', label: 'خوشحال', image: tiredImg, pin: 'bg-wood' },
 ] satisfies ReadonlyArray<{ key: MoodKey; label: string; image: string; pin: string }>;
 
 type Mood = (typeof MOODS)[number];
