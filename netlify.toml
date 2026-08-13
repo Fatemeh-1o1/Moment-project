@@ -11,6 +11,6 @@
   status = 200
 
 [[redirects]]
-  from = "/uploads/*"
-  to = "/uploads/:splat"
+  from = "/*"
+  to = "/index.html"
   status = 200
