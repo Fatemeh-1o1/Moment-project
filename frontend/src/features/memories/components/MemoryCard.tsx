@@ -33,7 +33,7 @@ export function MemoryCard({ memory, index = 0 }: { memory: Memory; index?: numb
         <div className="relative z-[1] flex flex-col gap-3">
           <div className="flex items-center gap-2 text-xs font-bold text-soft-ink">
             <img src={mood.image} alt={mood.label} className="size-8 rounded-xl object-cover" />
-            <time>{formatPersianDate(memory.memoryDate, { day: 'numeric', month: 'long' })}</time>
+            <time className='text-white font-extrabold'>{formatPersianDate(memory.memoryDate, { day: 'numeric', month: 'long' })}</time>
           </div>
 
           <p className="whitespace-pre-wrap px-3 text-sm leading-7 line-clamp-3">
