@@ -1,10 +1,10 @@
 import { randomUUID } from 'node:crypto';
 import { mkdirSync } from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { tmpdir } from 'node:os';
 import multer from 'multer';
 
-export const uploadsDir = fileURLToPath(new URL('../../uploads', import.meta.url));
+export const uploadsDir = process.env.UPLOADS_DIR || path.join(tmpdir(), 'moment-uploads');
 mkdirSync(uploadsDir, { recursive: true });
 
 const storage = multer.diskStorage({
